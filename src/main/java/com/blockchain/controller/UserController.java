@@ -34,12 +34,12 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<Long> login(@RequestBody LoginRequest loginRequest) {
         User user = userDao.findUserByEmailAndPassword(loginRequest.getEmail(), loginRequest.getPassword());
         if (user == null) {
-            return new ResponseEntity<>("Fail", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         } else {
-            return new ResponseEntity<>("{ \"id\":" + "\"" + user.getId() + "\"}", HttpStatus.OK);
+            return new ResponseEntity<>(user.getId(), HttpStatus.OK);
         }
     }
 
