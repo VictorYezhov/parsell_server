@@ -2,10 +2,7 @@ package com.blockchain.controller;
 
 import com.blockchain.requests.ParcelCreation;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -47,7 +44,7 @@ public class ParcelController {
 
 
 
-    @PostMapping("/")
+    @GetMapping("/parcels")
     public ResponseEntity<List<?>> getAllParcels(){
         System.out.println("Getting all parcels");
         return null;
