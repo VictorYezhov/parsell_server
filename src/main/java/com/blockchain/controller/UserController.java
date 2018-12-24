@@ -37,7 +37,7 @@ public class UserController {
     public ResponseEntity<String> login(@RequestBody LoginRequest loginRequest) {
         User user = userDao.findUserByEmailAndPassword(loginRequest.getEmail(), loginRequest.getPassword());
         if (user == null) {
-            return new ResponseEntity<String>("Fail", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Fail", HttpStatus.BAD_REQUEST);
         } else {
             return new ResponseEntity<>("{ \"id\":" + "\"" + user.getId() + "\"}", HttpStatus.OK);
         }
