@@ -2,7 +2,9 @@ package com.blockchain.controller;
 
 import com.blockchain.blockchain.ParcelService;
 import com.blockchain.dao.ParcelDao;
+import com.blockchain.dao.UserDao;
 import com.blockchain.model.Parcel;
+import com.blockchain.model.User;
 import com.blockchain.requests.ParcelCreation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +25,9 @@ public class ParcelController {
     @Autowired
     private ParcelService parcelService;
 
+    @Autowired
+    private UserDao userDao;
+
 
 
     @PostMapping("/newParcelCreation")
@@ -31,7 +36,9 @@ public class ParcelController {
         System.out.println("Creating parcel: "+ creation.toString());
         Parcel parcel = new Parcel();
         parcel.setSenderId(creation.getFromId().toString());
-        parcel.setReceiverId(creation.getUserToId().toString());
+        User user = userDao.findUserByEmail(creation.getEmail());
+
+        parcel.setReceiverId(user.getId().toString());
         parcel.setDescription(creation.getDescription());
         parcel.setAddressFrom(creation.getFrom().toString());
         parcel.setAddressTo(creation.getAddressTo().toString());

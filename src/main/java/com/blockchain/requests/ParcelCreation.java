@@ -7,7 +7,7 @@ import com.blockchain.model.Coordinates;
  */
 public class ParcelCreation {
     private Long fromId;
-    private Long userToId;
+    private String email;
     private Coordinates addressTo;
     private Coordinates from;
     private double price;
@@ -46,12 +46,12 @@ public class ParcelCreation {
         this.from = from;
     }
 
-    public Long getUserToId() {
-        return userToId;
+    public String getEmail() {
+        return email;
     }
 
-    public void setUserToId(Long userToId) {
-        this.userToId = userToId;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getDescription() {
