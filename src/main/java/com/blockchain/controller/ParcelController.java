@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by Victor on 22.12.2018.
@@ -100,7 +101,7 @@ public class ParcelController {
     @GetMapping("/parcels")
     public ResponseEntity<List<Parcel>> getAllParcels(){
         System.out.println("Getting all parcels");
-        return new ResponseEntity<>(parcelDao.findAll(), HttpStatus.OK);
+        return new ResponseEntity<>(parcelDao.findAll().stream().filter(p->!p.getStatus().equals(ParcelStates.CREATED.getName())).collect(Collectors.toList()), HttpStatus.OK);
     }
 
 }

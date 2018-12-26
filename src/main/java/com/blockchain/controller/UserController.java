@@ -67,7 +67,8 @@ public class UserController {
     @GetMapping("/getParcelsToDeliver")
     public ResponseEntity<List<Parcel>> getParcelsToDeliver(@RequestParam("id") String id){
 
-        return new ResponseEntity<>(parcelDao.findAllByCourierId(id).stream().filter(p->p.getStatus().equals(ParcelStates.DELIVERED.getName())).collect(Collectors.toList()), HttpStatus.OK);
+
+        return new ResponseEntity<>(parcelDao.findAllByCourierId(id).stream().filter(p->!p.getStatus().equals(ParcelStates.DELIVERED.getName())).collect(Collectors.toList()), HttpStatus.OK);
 
     }
 
