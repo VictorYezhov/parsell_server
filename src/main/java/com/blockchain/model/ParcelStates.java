@@ -6,7 +6,7 @@ package com.blockchain.model;
 public enum ParcelStates {
     CREATED("Created"),
     COURIER_FOUND("Courier found"),
-    DELIVERED("delivered");
+    DELIVERED("Delivered");
 
     private String name;
 
