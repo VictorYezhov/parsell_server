@@ -17,6 +17,7 @@ public class Parcel {
     private String senderId;
     private String receiverId;
     private String addressTo;
+    private String courierId;
     private String addressFrom;
     private double price;
     private String status;
@@ -85,6 +86,14 @@ public class Parcel {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getCourierId() {
+        return courierId;
+    }
+
+    public void setCourierId(String courierId) {
+        this.courierId = courierId;
     }
 
     @Override

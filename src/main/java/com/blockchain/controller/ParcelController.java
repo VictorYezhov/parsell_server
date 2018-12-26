@@ -62,6 +62,7 @@ public class ParcelController {
         System.out.println("Becoming courier for parcel with id "+ id+" user id: "+ userId);
         Parcel parcel = parcelDao.findById(id).get();
         parcel.setStatus(ParcelStates.COURIER_FOUND.getName());
+        parcel.setCourierId(userId.toString());
         parcelDao.save(parcel);
 
         parcelService.editParcel(parcel).sendAsync().thenApply(t->{

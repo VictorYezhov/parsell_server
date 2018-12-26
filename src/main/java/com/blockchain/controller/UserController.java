@@ -54,6 +54,7 @@ public class UserController {
     @GetMapping("/getMyParcels")
     public ResponseEntity<List<Parcel>>  getAllMyParcels(@RequestParam("id") String id){
 
+
         return new ResponseEntity<>(parcelDao.findAllBySenderId(id).stream().filter(p->p.getStatus().equals(ParcelStates.CREATED.getName())).collect(Collectors.toList()), HttpStatus.OK);
 
     }
@@ -61,6 +62,13 @@ public class UserController {
     @GetMapping("/getParcelsForMe")
     public ResponseEntity<List<Parcel>> getParcelsForMe(@RequestParam("id") String id){
         return new ResponseEntity<>(parcelDao.findAllByReceiverId(id), HttpStatus.OK);
+    }
+
+    @GetMapping("/getParcelsToDeliver")
+    public ResponseEntity<List<Parcel>> getParcelsToDeliver(@RequestParam("id") String id){
+
+        return new ResponseEntity<>(parcelDao.findAllByCourierId(id).stream().filter(p->p.getStatus().equals(ParcelStates.DELIVERED.getName())).collect(Collectors.toList()), HttpStatus.OK);
+
     }
 
 

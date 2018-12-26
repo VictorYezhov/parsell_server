@@ -13,4 +13,5 @@ public interface ParcelDao extends JpaRepository<Parcel, Long> {
 
     List<Parcel> findAllBySenderId(String senderId);
     List<Parcel> findAllByReceiverId(String receiverId);
+    List<Parcel> findAllByCourierId(String courierId);
 }
