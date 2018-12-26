@@ -101,7 +101,7 @@ public class ParcelController {
     @GetMapping("/parcels")
     public ResponseEntity<List<Parcel>> getAllParcels(){
         System.out.println("Getting all parcels");
-        return new ResponseEntity<>(parcelDao.findAll().stream().filter(p->!p.getStatus().equals(ParcelStates.CREATED.getName())).collect(Collectors.toList()), HttpStatus.OK);
+        return new ResponseEntity<>(parcelDao.findAll().stream().filter(p->p.getStatus().equals(ParcelStates.CREATED.getName())).collect(Collectors.toList()), HttpStatus.OK);
     }
 
 }
