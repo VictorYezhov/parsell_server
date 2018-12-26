@@ -4,9 +4,11 @@ import com.blockchain.blockchain.ParcelService;
 import com.blockchain.dao.ParcelDao;
 import com.blockchain.dao.UserDao;
 import com.blockchain.model.Parcel;
+import com.blockchain.model.ParcelStates;
 import com.blockchain.model.User;
 import com.blockchain.requests.ParcelCreation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -43,7 +45,7 @@ public class ParcelController {
         parcel.setAddressFrom(creation.getFrom().toString());
         parcel.setAddressTo(creation.getAddressTo().toString());
         parcel.setPrice((long) (creation.getPrice()));
-        parcel.setStatus("Created");
+        parcel.setStatus(ParcelStates.CREATED.getName());
         parcelDao.save(parcel);
         parcelService.createParcel(parcel).sendAsync().thenApply(t->{
             System.out.println(parcel.toString());
@@ -58,6 +60,19 @@ public class ParcelController {
     @PostMapping("/becomeCourier")
     public ResponseEntity<?> becomeCourier(@RequestParam("parcelId") Long id,@RequestParam("userId") Long userId ){
         System.out.println("Becoming courier for parcel with id "+ id+" user id: "+ userId);
+        Parcel parcel = parcelDao.findById(id).get();
+        parcel.setStatus(ParcelStates.COURIER_FOUND.getName());
+        parcelDao.save(parcel);
+
+        parcelService.editParcel(parcel).sendAsync().thenApply(t->{
+            System.out.println(parcel.toString());
+            System.out.println("Edit parcel, hash:"+ t.getBlockHash());
+            return t;
+        });
+
+
+
+
         //TODO update parcel state
         return null;
     }
@@ -67,16 +82,24 @@ public class ParcelController {
     public ResponseEntity<?> deliverOrder(@RequestParam("parcelId")Long parcelId){
 
         System.out.println("Delivering parcel: "+ parcelId);
-        //TODO update parcel state
+        Parcel parcel = parcelDao.findById(parcelId).get();
+        parcel.setStatus(ParcelStates.DELIVERED.getName());
+        parcelDao.save(parcel);
+
+        parcelService.editParcel(parcel).sendAsync().thenApply(t->{
+            System.out.println(parcel.toString());
+            System.out.println("Edit parcel, hash:"+ t.getBlockHash());
+            return t;
+        });
         return null;
     }
 
 
 
     @GetMapping("/parcels")
-    public ResponseEntity<List<?>> getAllParcels(){
+    public ResponseEntity<List<Parcel>> getAllParcels(){
         System.out.println("Getting all parcels");
-        return null;
+        return new ResponseEntity<>(parcelDao.findAll(), HttpStatus.OK);
     }
 
 }

@@ -75,7 +75,7 @@ public class BlockChainConnector  implements ParcelService {
                 BigInteger.valueOf(Long.decode(parcel.getReceiverId())),
                 parcel.getAddressTo(),
                 parcel.getAddressFrom(),
-                BigInteger.valueOf((long)parcel.getPrice()), "CREATED", parcel.getDescription()) ;
+                BigInteger.valueOf((long)parcel.getPrice()), parcel.getStatus(), parcel.getDescription()) ;
     }
 
     @Override
@@ -86,7 +86,10 @@ public class BlockChainConnector  implements ParcelService {
     @Override
     public RemoteCall<TransactionReceipt> editParcel(Parcel parcel) {
 
-        return null;
+        return contract.editParcel(BigInteger.valueOf(parcel.getId()),
+                parcel.getAddressTo(),
+                parcel.getAddressFrom(),
+                BigInteger.valueOf((long)parcel.getPrice()), parcel.getStatus(), parcel.getDescription());
     }
 
     @Override
