@@ -7,8 +7,11 @@ import com.blockchain.model.Coordinates;
  */
 public class ParcelCreation {
     private Long fromId;
+    private Long userToId;
     private Coordinates addressTo;
+    private Coordinates from;
     private double price;
+    private String description;
 
 
     public Long getFromId() {
@@ -33,6 +36,30 @@ public class ParcelCreation {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public Coordinates getFrom() {
+        return from;
+    }
+
+    public void setFrom(Coordinates from) {
+        this.from = from;
+    }
+
+    public Long getUserToId() {
+        return userToId;
+    }
+
+    public void setUserToId(Long userToId) {
+        this.userToId = userToId;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     @Override

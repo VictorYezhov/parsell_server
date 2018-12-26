@@ -1,6 +1,10 @@
 package com.blockchain.controller;
 
+import com.blockchain.blockchain.ParcelService;
+import com.blockchain.dao.ParcelDao;
+import com.blockchain.model.Parcel;
 import com.blockchain.requests.ParcelCreation;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,6 +17,11 @@ import java.util.List;
 public class ParcelController {
 
 
+    @Autowired
+    private ParcelDao parcelDao;
+
+    @Autowired
+    private ParcelService parcelService;
 
 
 
@@ -20,8 +29,21 @@ public class ParcelController {
     public ResponseEntity<?> createNewParcel(@RequestBody ParcelCreation creation){
 
         System.out.println("Creating parcel: "+ creation.toString());
+        Parcel parcel = new Parcel();
+        parcel.setSenderId(creation.getFromId().toString());
+        parcel.setReceiverId(creation.getUserToId().toString());
+        parcel.setDescription(creation.getDescription());
+        parcel.setAddressFrom(creation.getFrom().toString());
+        parcel.setAddressTo(creation.getAddressTo().toString());
+        parcel.setPrice((long) (creation.getPrice()));
+        parcel.setStatus("Created");
+        parcelDao.save(parcel);
+        parcelService.createParcel(parcel).sendAsync().thenApply(t->{
+            System.out.println(parcel.toString());
+            System.out.println("Sended new parcel to chain, hash:"+ t.getBlockHash());
+            return t;
+        });
 
-        //TODO write this to  blockchain
         return null;
     }
 
